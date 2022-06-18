@@ -13,6 +13,7 @@ public class CollapsableCanvasObject : MonoBehaviour
     bool collapsed = false;
     Vector2 preCollapsePosition;
     Vector2 preCollapseSize;
+    GameObject positionTargetWhenCollapsed;
 
     AnimationCurve transformCurve = AnimationCurve.EaseInOut(0,0,1,1);
 
@@ -25,6 +26,15 @@ public class CollapsableCanvasObject : MonoBehaviour
         if (!collapsableItemHolder) collapsableItemHolder = FindObjectsOfType<CollapsedItemHolder>()[0].transform;
         mRectTransform = transform as RectTransform;
         mImage = GetComponent<Image>();
+    }
+
+    private void Update()
+    {
+        if (resizeTask == null) return;
+        if (resizeTask.Running) return;
+        if (!collapsed) return;
+
+        transform.position += (positionTargetWhenCollapsed.transform.position - transform.position) * Time.deltaTime;
     }
 
     public void OnClick(RectTransform rectTransform) {
@@ -56,31 +66,56 @@ public class CollapsableCanvasObject : MonoBehaviour
         }
     }
 
+    #region IEnumerator Bodies
+
+    IEnumerator RotateButton(RectTransform buttonToRotate, Quaternion from, Quaternion to)
+    {
+        float t = 0;
+        while (t < 1)
+        {
+            t += Time.deltaTime / transformLength;
+            buttonToRotate.localRotation = Quaternion.Lerp(from, to, t);
+            yield return null;
+        }
+    }
+
+    IEnumerator ChangeCornerRoundness(float target)
+    {
+        float original = mImage.pixelsPerUnitMultiplier;
+        float t = 0;
+        while (t < 1)
+        {
+            t += Time.deltaTime / transformLength;
+            mImage.pixelsPerUnitMultiplier = Mathf.Lerp(original, target, t);
+            yield return null;
+        }
+    }
+
     IEnumerator Collapse(RectTransform rectTransform)
     {
 
         preCollapsePosition = mRectTransform.localPosition;
         preCollapseSize = mRectTransform.sizeDelta;
 
-        GameObject collapsedItem = new GameObject("PlaceHolder", typeof(RectTransform));
-        collapsedItem.transform.SetParent(collapsableItemHolder);
+        positionTargetWhenCollapsed = new GameObject("PlaceHolder", typeof(RectTransform));
+        positionTargetWhenCollapsed.transform.SetParent(collapsableItemHolder);
 
         yield return new WaitForEndOfFrame();
 
-        collapsedItem.transform.SetParent(collapsableItemHolder.parent);
-        (collapsedItem.transform as RectTransform).ChangeAnchorKeepPosition(new Vector2(.5f, .5f), new Vector2(.5f, .5f));
-        collapsedItem.transform.localScale = Vector3.one;
+        //positionTargetWhenCollapsed.transform.SetParent(collapsableItemHolder.parent);
+        //(positionTargetWhenCollapsed.transform as RectTransform).ChangeAnchorKeepPosition(new Vector2(.5f, .5f), new Vector2(.5f, .5f));
+        //positionTargetWhenCollapsed.transform.localScale = Vector3.one;
 
-        yield return new WaitForEndOfFrame();
+        //yield return new WaitForEndOfFrame();
 
         resizeTask = new Task(
             TransformCoroutine(
-                collapsedItem.transform.localPosition,
+                positionTargetWhenCollapsed.transform.localPosition + positionTargetWhenCollapsed.transform.parent.localPosition,
                 new Vector2(64, 64)
             )
         );
         
-        StartCoroutine(DestroyAfterResizeCoroutine(collapsedItem));
+        StartCoroutine(DestroyWhenExpand());
     }
 
     IEnumerator TransformCoroutine(Vector3 targetPos, Vector2 targetSize)
@@ -103,32 +138,11 @@ public class CollapsableCanvasObject : MonoBehaviour
         }
     }
 
-    IEnumerator DestroyAfterResizeCoroutine(GameObject itemToDestroy)
+    IEnumerator DestroyWhenExpand()
     {
-        while(resizeTask.Running) yield return null;
-        Destroy(itemToDestroy);
+        while(collapsed == true) yield return null;
+        Destroy(positionTargetWhenCollapsed);
     }
-
-    IEnumerator RotateButton(RectTransform buttonToRotate, Quaternion from, Quaternion to)
-    {
-        float t = 0;
-        while(t < 1)
-        {
-            t += Time.deltaTime / transformLength;
-            buttonToRotate.localRotation = Quaternion.Lerp(from, to, t);
-            yield return null;
-        }
-    }
-
-    IEnumerator ChangeCornerRoundness(float target)
-    {
-        float original = mImage.pixelsPerUnitMultiplier;
-        float t = 0;
-        while (t < 1)
-        {
-            t += Time.deltaTime / transformLength;
-            mImage.pixelsPerUnitMultiplier = Mathf.Lerp(original, target, t);
-            yield return null;
-        }
-    }
+    
+    #endregion
 }
