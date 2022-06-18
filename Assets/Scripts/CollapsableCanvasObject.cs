@@ -102,12 +102,6 @@ public class CollapsableCanvasObject : MonoBehaviour
 
         yield return new WaitForEndOfFrame();
 
-        //positionTargetWhenCollapsed.transform.SetParent(collapsableItemHolder.parent);
-        //(positionTargetWhenCollapsed.transform as RectTransform).ChangeAnchorKeepPosition(new Vector2(.5f, .5f), new Vector2(.5f, .5f));
-        //positionTargetWhenCollapsed.transform.localScale = Vector3.one;
-
-        //yield return new WaitForEndOfFrame();
-
         resizeTask = new Task(
             TransformCoroutine(
                 positionTargetWhenCollapsed.transform.localPosition + positionTargetWhenCollapsed.transform.parent.localPosition,
