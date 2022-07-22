@@ -29,7 +29,6 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 643402047087703601}
   m_Father: {fileID: 643402046977669975}
@@ -139,6 +138,22 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4816232319963196940}
+          m_TargetAssemblyTypeName: FocusableCanvasObject, Assembly-CSharp
+          m_MethodName: OnClick
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 643402046977669975}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &643402046755483440
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,7 +184,6 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 643402047087703601}
   m_RootOrder: 0
@@ -285,6 +299,7 @@ GameObject:
   - component: {fileID: 643402046977669974}
   - component: {fileID: 643402046977669973}
   - component: {fileID: 643402046977669968}
+  - component: {fileID: 4816232319963196940}
   - component: {fileID: 643402046977669969}
   m_Layer: 5
   m_Name: TopDraggableCanvasObject
@@ -303,7 +318,6 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 643402047478956965}
   - {fileID: 643402046139762891}
@@ -406,6 +420,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allowancePx: 32
   minimumSize: 64
+--- !u!114 &4816232319963196940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643402046977669976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8f68758c88c9db4cb7edcd683bb37c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &643402046977669969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -467,6 +493,22 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4816232319963196940}
+          m_TargetAssemblyTypeName: FocusableCanvasObject, Assembly-CSharp
+          m_MethodName: OnClick
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 643402046977669975}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &643402047087703602
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,7 +535,6 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 643402046755483407}
   m_Father: {fileID: 643402046139762891}
@@ -532,7 +573,6 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 643402046977669975}
   m_RootOrder: 0
